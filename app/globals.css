@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Ecoyaan Brand Colors */
+  --color-brand-green: #15b375;
+  --color-brand-dark: #004d2c;
+  --color-brand-accent: #106b43;
+  --color-brand-light: #f0fdf4;
+  
+  /* Semantic Colors */
+  --color-text-main: #1a1a1a;
+  --color-text-muted: #575757;
+  --color-bg-light: #f9fafb;
+  --color-border-subtle: #e5e7eb;
+}
+
+/* Custom Utilities for Animations */
+@layer utilities {
+  .animate-in {
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+  }
+  .fade-in {
+    animation-name: fadeIn;
+  }
+  .slide-in-from-bottom-4 {
+    --tw-enter-translate-y: 1rem;
+    animation-name: enter;
+  }
+  .duration-500 {
+    animation-duration: 500ms;
+  }
+
+  /* Custom Scrollbar matching the UI */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--tw-enter-translate-y, 0));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* the body background, text color, etc. are set via className on <body> */
+
+h1, h2, h3, h4 {
+  @apply text-text-main font-bold;
+}
+
+/* borders applied via a global selector; border-gray-200 is a core utility so it will be available from content scanning */
+* {
+  border-color: var(--color-gray-200);
+}
