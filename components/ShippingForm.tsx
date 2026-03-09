@@ -33,27 +33,43 @@ export const ShippingForm = ({ onSubmit, hideButton }: Props) => {
     e.preventDefault();
     const missingFields = Object.keys(formData).filter(key => !formData[key as keyof ShippingAddress]);
 
-    if (missingFields.length > 0) {
-      setErrors(missingFields);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    const invalidFields: string[] = [...missingFields];
+    if (formData.email && !emailRegex.test(formData.email)) invalidFields.push('email');
+    if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) invalidFields.push('phoneNumber');
+
+    if (invalidFields.length > 0) {
+      setErrors(invalidFields);
       return;
     }
 
     onSubmit(formData);
   };
 
-  const Input = ({ name, placeholder, type = "text", className = "" }: { name: keyof ShippingAddress, placeholder: string, type?: string, className?: string }) => (
-    <div className={className}>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={formData[name]}
-        onChange={handleChange}
-        className={`w-full border p-2.5 rounded-lg text-sm outline-none transition ${errors.includes(name) ? 'border-red-400 bg-red-50' : 'border-gray-100 focus:border-[#15b375]'}`}
-      />
-      {errors.includes(name) && <p className="text-[10px] text-red-500 mt-1 font-bold uppercase ml-1">Required</p>}
-    </div>
-  );
+  const Input = ({ name, placeholder, type = "text", className = "" }: { name: keyof ShippingAddress, placeholder: string, type?: string, className?: string }) => {
+    const isError = errors.includes(name);
+    const isEmpty = !formData[name];
+
+    return (
+      <div className={className}>
+        <input
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={formData[name]}
+          onChange={handleChange}
+          className={`w-full border p-2.5 rounded-lg text-sm outline-none transition ${isError ? 'border-red-400 bg-red-50' : 'border-gray-100 focus:border-[#15b375]'}`}
+        />
+        {isError && (
+          <p className="text-[10px] text-red-500 mt-1 font-bold uppercase ml-1">
+            {isEmpty ? 'Required' : 'Invalid Format'}
+          </p>
+        )}
+      </div>
+    );
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -86,7 +102,7 @@ export const ShippingForm = ({ onSubmit, hideButton }: Props) => {
           name="state"
           value={formData.state}
           onChange={handleChange}
-          className="border border-gray-100 p-2.5 rounded-lg text-sm focus:border-[#15b375] outline-none transition bg-white"
+          className="border border-gray-100 p-2.5 rounded-lg text-sm focus:border-[#15b375] outline-none transition bg-white cursor-pointer"
         >
           {['Karnataka', 'Telangana', 'Tamil Nadu', 'Maharashtra', 'Delhi'].map(s => <option key={s} value={s}>{s}</option>)}
         </select>
@@ -95,7 +111,7 @@ export const ShippingForm = ({ onSubmit, hideButton }: Props) => {
       {!hideButton && (
         <button
           type="submit"
-          className="w-full mt-6 bg-[#15b375] text-white font-bold py-3.5 rounded-xl hover:bg-[#108a5a] transition active:scale-[0.99]"
+          className="w-full mt-6 bg-[#15b375] text-white font-bold py-3.5 rounded-xl hover:bg-[#108a5a] transition active:scale-[0.99] cursor-pointer"
         >
           Confirm Address & Continue →
         </button>
