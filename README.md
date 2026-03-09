@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Run Locally
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Install Dependencies**:
+   in terminal:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Start the App**:
+  to Run:
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Open in Browser**:
+   Visit `http://localhost:3000`
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+##  Architectural Choices
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I chose these technologies and patterns to make the app fast, reliable, and easy to read:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Next.js (App Router)
+I used the latest version of Next.js. It helps the page load quickly and handles all the routing between the checkout and success screens automatically.
 
-## Deploy on Vercel
+### 2. Server-Side Rendering (SSR)
+When we first open the checkout page, the "cart data" is fetched on the server before the page even reaches our browser. This makes the initial screen appear instantly and is great for performance.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Context API (State Management)
+To keep track of our cart items and the address we type in, I used React Context. This acts like a "shared memory" for the app, so different parts (like the Shipping Form and the Order Summary) can talk to each other without passing data through every single component.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Tailwind CSS
+For the design, I used Tailwind CSS. It allowed me to create a "premium" feel with smooth animations, custom shadows, and the brand-specific green color system while keeping the code simple and responsive for mobile phones.
+

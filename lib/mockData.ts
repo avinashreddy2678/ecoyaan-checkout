@@ -17,6 +17,6 @@ export const mockCartData: CartData = {
       image: '/cotton-bags.png',
     },
   ],
-  shipping_fee: 50,
-  discount_applied: 0,
+  shipping_fee: 0,
+  discount_applied: 120,
 };
